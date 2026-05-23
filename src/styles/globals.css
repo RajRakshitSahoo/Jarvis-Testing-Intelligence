@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon: #00ff88;
+  --neon-dim: #00cc6a;
+  --cyber: #00ffff;
+  --danger: #ff3333;
+  --warning: #ffaa00;
+  --bg: #050505;
+  --bg2: #0a0a0a;
+  --panel: rgba(0, 20, 10, 0.8);
+  --border: rgba(0, 255, 136, 0.2);
+  --border-bright: rgba(0, 255, 136, 0.6);
+  --glow: 0 0 10px rgba(0, 255, 136, 0.5);
+  --glow-lg: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(0, 15, 8, 0.85);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.08), inset 0 0 20px rgba(0, 255, 136, 0.02);
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.12), inset 0 0 30px rgba(0, 255, 136, 0.04);
+}
+
+/* Neon text */
+.neon-text {
+  color: var(--neon);
+  text-shadow: 0 0 7px #00ff88, 0 0 14px rgba(0, 255, 136, 0.5);
+}
+
+.neon-text-sm {
+  color: var(--neon);
+  text-shadow: 0 0 4px #00ff88;
+}
+
+/* Neon border */
+.neon-border {
+  border: 1px solid var(--neon);
+  box-shadow: 0 0 5px rgba(0, 255, 136, 0.3), inset 0 0 5px rgba(0, 255, 136, 0.1);
+}
+
+/* Corner decorations */
+.corner-tl::before,
+.corner-tl::after {
+  content: '';
+  position: absolute;
+}
+.corner-tl::before {
+  top: 0; left: 0;
+  width: 12px; height: 1px;
+  background: var(--neon);
+}
+.corner-tl::after {
+  top: 0; left: 0;
+  width: 1px; height: 12px;
+  background: var(--neon);
+}
+
+/* Scanline overlay */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+.scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); clip-path: none; }
+  20% { transform: translate(-2px, 1px); clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); }
+  40% { transform: translate(2px, -1px); clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
+  60% { transform: translate(-1px, 2px); clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); }
+  80% { transform: translate(1px, -2px); clip-path: none; }
+}
+
+/* Pulse ring */
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px solid var(--neon);
+  border-radius: inherit;
+  animation: pulseRing 2s ease-out infinite;
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Data flow animation */
+@keyframes dataFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.data-flow {
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  background-size: 200% 100%;
+  animation: dataFlow 2s linear infinite;
+}
+
+/* Boot screen typing */
+@keyframes typeIn {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Neon button */
+.btn-neon {
+  background: transparent;
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+  transition: left 0.3s ease;
+}
+
+.btn-neon:hover::before {
+  left: 100%;
+}
+
+.btn-neon:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon), var(--neon));
+  box-shadow: 0 0 8px var(--neon);
+  transition: width 0.3s ease;
+}
+
+/* Status indicator */
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+  animation: blink 2s ease-in-out infinite;
+}
+
+.status-dot.danger {
+  background: var(--danger);
+  box-shadow: 0 0 6px var(--danger);
+}
+
+.status-dot.warning {
+  background: var(--warning);
+  box-shadow: 0 0 6px var(--warning);
+}
+
+/* Metric bar */
+.metric-bar {
+  height: 3px;
+  background: rgba(0, 255, 136, 0.15);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-dim), var(--neon));
+  box-shadow: 0 0 6px var(--neon);
+  border-radius: 1px;
+  transition: width 0.5s ease;
+}
+
+/* Xterm overrides */
+.xterm-container .xterm {
+  padding: 8px;
+  height: 100%;
+}
+
+.xterm-container .xterm-screen {
+  width: 100% !important;
+}
+
+/* Drag handle */
+.drag-handle {
+  cursor: grab;
+}
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Panel header */
+.panel-header {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--neon);
+  text-shadow: 0 0 5px var(--neon);
+}
+
+/* Spinning border */
+@keyframes borderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Holographic shimmer */
+@keyframes hologram {
+  0% { opacity: 0.95; filter: hue-rotate(0deg); }
+  50% { opacity: 1; filter: hue-rotate(10deg); }
+  100% { opacity: 0.95; filter: hue-rotate(0deg); }
+}
+
+.hologram {
+  animation: hologram 3s ease-in-out infinite;
+}
+
+/* Matrix rain canvas */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* Notification slide */
+@keyframes slideInRight {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(120%); opacity: 0; }
+}
+
+.notification-enter {
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notification-exit {
+  animation: slideOutRight 0.3s ease-in;
+}
+
+/* Scrollbar for panels */
+.panel-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 136, 0.3) transparent;
+}
+
+/* Chat message animation */
+@keyframes messageIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.message-in {
+  animation: messageIn 0.3s ease;
+}
+
+/* Waveform */
+@keyframes waveform {
+  0%, 100% { height: 4px; }
+  50% { height: 20px; }
+}
+
+/* Loading spinner */
+@keyframes spinCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.spin-cw { animation: spinCW 2s linear infinite; }
+.spin-ccw { animation: spinCCW 3s linear infinite; }
+
+/* Radar sweep */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hide default focus outlines, use custom */
+*:focus {
+  outline: none;
+}
+*:focus-visible {
+  outline: 1px solid var(--neon);
+  outline-offset: 2px;
+}
