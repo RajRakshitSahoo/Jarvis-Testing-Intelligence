@@ -6,7 +6,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@xterm/xterm', '@xterm/addon-fit', '@xterm/addon-web-links'],
     include: ['react', 'react-dom', 'framer-motion', 'gsap', 'zustand', 'three']
-  },
+  }, 
   build: {
     target: 'esnext',
     rollupOptions: {
